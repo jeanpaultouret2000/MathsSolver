@@ -25,7 +25,7 @@ public:
             for (T j = 0; j < n; j++){
                 res(1, j) = elements[i][j];
             }
-        return res
+        return res;
     };
     
     Matrix operator()(T i,T j) {return elements[i][j];};
