@@ -1,0 +1,8 @@
+//
+// Created by Lucien Walewski on 12/11/2020.
+//
+
+#ifndef MATHSSOLVER_GREYSCALE_HPP
+#define MATHSSOLVER_GREYSCALE_HPP
+
+#endif //MATHSSOLVER_GREYSCALE_HPP
