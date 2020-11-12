@@ -83,6 +83,18 @@ public:
         }
         return res;
     };
+    
+     bool operator = (const Matrix& a) {
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < m; j++) {
+                if (elements[i][j] != a(i, j)) {
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    };
+    
 
     Matrix crop_row(int r) {
     //Returns a matrix where the 1st column and the i-th row were removed, input is expected to be a square matrix.
