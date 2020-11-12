@@ -84,8 +84,24 @@ public:
         return res;
     };
 
-    Matrix crop_row(int i) {
-    //Returns a matrix where the 1st column and the i-th row were removed.
+    Matrix crop_row(int r) {
+    //Returns a matrix where the 1st column and the i-th row were removed, input is expected to be a square matrix.
+        Matrix cropped(n-1, m-1);
+        if (r > 0){
+            for (int i = 0; i < r; i++) {
+                for (int j = 1; j < m; j++){
+                    cropped(i, j) = elements[i][j];
+                }
+            }
+        }
+        if (r+1 < m) {
+            for (int i = r+1; i < m; i++) {
+                for (int j = 1; j < m; j++){
+                    cropped(i, j) = elements[i][j];
+                }
+            }
+        }
+        return cropped;
     };
 
     T det(){
