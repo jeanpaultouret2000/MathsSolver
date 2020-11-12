@@ -1,15 +1,21 @@
 #include <bits/stdc++.h>
 
+#include <vector>
+#include <cmath>
+
 using namespace std;
 
 template <typename T> class Matrix
 {
-    
+
 public:
-    
+
     Matrix(int height, int width){n = height; m = width;};
     ~Matrix() {delete elements;};
-    
+
+    T height(){return n;};
+    T width(){return m;};
+
     Matrix column(T j) {
         //Returns the j-th column of the matrix, we assume j < m.
         Matrix<T> res(n, 1);
@@ -18,7 +24,7 @@ public:
         }
         return res;
     };
-    
+
     Matrix row(T i) {
         //Returns the i-th row of the matrix, we assume i < n.
         Matrix<T> res(1, m);
@@ -27,9 +33,9 @@ public:
             }
         return res;
     };
-    
+
     Matrix operator()(T i,T j) {return elements[i][j];};
-    
+
     Matrix operator + (const Matrix& a) {
         //An operator for the additions between two matrices.
         Matrix<T> res(n, m);
@@ -40,7 +46,7 @@ public:
         }
         return res;
     };
-    
+
     Matrix operator - (const Matrix& a) {
         //An operator for the substractions between two matrices.
         Matrix<T> res(n, m);
@@ -51,7 +57,7 @@ public:
         }
         return res;
     };
-    
+
     Matrix operator * (const T& k) {
         //An operator for the multiplications between a matrix and a scalar, which will be useful to compute the determinant.
         Matrix<T> res(n, m);
@@ -62,23 +68,51 @@ public:
         }
         return res;
     };
-    
+
     Matrix operator * (const Matrix& a) {
-        //An operator for the multiplications between two matrices.
-        
+        //An operator for the multiplications between two matrices, we assume that width = a.height.
+        Matrix res(n, a.width);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < a.width; j++) {
+                T elm = 0;
+                for (int k = 0; k < m; k++) {
+                    elm += elements[i][k] * a(k, j);
+                }
+                res(i, j) = elm;
+            }
+        }
+        return res;
     };
-    
+
+    Matrix crop_row(int i) {
+    //Returns a matrix where the 1st column and the i-th row were removed.
+    };
+
     T det(){
-    //Computes the determinant of a matrix.
+    //Computes the determinant of a matrix, assuming it is a square matrix.
+        if (n == 1) {
+            return elements[0][0];
+        } else {
+            T d = 0;
+            for (int i = 0; i < n; i++) {
+                Matrix cropped = (*this).crop_row(i);
+                if (i%2) {
+                    d += cropped.det() * elements(i, 1);
+                } else {
+                    d -= cropped.det() * elements(i, 1);
+                }
+            }
+            return d;
+        }
     };
-    
+
     Matrix adj() {
-    //Computes the adjacent matrix of a matrix.
+    //Computes the adjacent matrix of a matrix, assuming it is a square matrix.
     };
     Matrix inverse(){
-    //Computes the inverse of a matrix.
+    //Computes the inverse of a matrix, assuming it is a square matrix.
     };
-    
+
 private:
     int n, m;
     vector< vector<T> > elements ;
