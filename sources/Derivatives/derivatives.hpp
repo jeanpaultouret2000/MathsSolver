@@ -32,7 +32,7 @@ public:
     AbstractFunction multiply(AbstractFunction function1, AbstractFunction function2);
     AbstractFunction divide(AbstractFunction function1, AbstractFunction function2);
     AbstractFunction chain_rule(AbstractFunction function1, AbstractFunction function2);
-private:
+protected:
     Operation operation;
     AbstractFunction left;
     AbstractFunction right;
@@ -43,7 +43,7 @@ class SinFunction : public AbstractFunction{
 public:
     SinFunction();
     AbstractFunction solve();
-private:
+protected:
     Operation operation;
     AbstractFunction left;
     AbstractFunction right;
@@ -53,7 +53,7 @@ class CosFunction : public AbstractFunction{
 public:
     CosFunction();
     AbstractFunction solve();
-private:
+protected:
     Operation operation;
     AbstractFunction left;
     AbstractFunction right;
@@ -63,7 +63,7 @@ public:
     ExponentialFunction(int base);
     AbstractFunction solve();
     int get_base();
-private:
+protected:
     int base;
     Operation operation;
     AbstractFunction left;
@@ -75,7 +75,7 @@ public:
     LogarithmicFunction(int base);
     AbstractFunction solve();
     int get_base();
-private:
+protected:
     int base;
     Operation operation;
     AbstractFunction left;
@@ -87,7 +87,7 @@ public:
     PolynomialFunction(int exponent);
     AbstractFunction solve();
     int get_exponent();
-private:
+protected:
     int exponent;
     Operation operation;
     AbstractFunction left;
@@ -99,7 +99,7 @@ public:
     ConstantFunction(int c);
     AbstractFunction solve();
     int get_c();
-private:
+protected:
     int c;
     Operation operation;
     AbstractFunction left;
