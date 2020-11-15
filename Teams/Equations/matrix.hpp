@@ -10,17 +10,28 @@ template <typename T> class Matrix
 
 public:
 
-    Matrix(int height, int width){n = height; m = width;};
+    Matrix(int height, int width){
+        n = height;
+        m = width;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                elements[i][j] = 0;
+            }
+        }
+    };
     ~Matrix() {delete elements;};
 
     T height(){return n;};
     T width(){return m;};
+    void set_element(int i, int j, T element) {
+        elements[i][j] = element;
+    };
 
     Matrix column(T j) {
         //Returns the j-th column of the matrix, we assume j < m.
         Matrix<T> res(n, 1);
         for (T i = 0; i < n; i++){
-            res(i, 1) = elements[i][j];
+            res.set_element(i, 1, elements[i][j]);
         }
         return res;
     };
@@ -29,19 +40,19 @@ public:
         //Returns the i-th row of the matrix, we assume i < n.
         Matrix<T> res(1, m);
             for (T j = 0; j < n; j++){
-                res(1, j) = elements[i][j];
+                res.set_element(1, j, elements[i][j]);
             }
         return res;
     };
 
-    Matrix operator()(T i,T j) {return elements[i][j];};
+    Matrix operator()(T i,T j) {return elements[i][j];}; //A member function that makes the matrices more user friendly.
 
     Matrix operator + (const Matrix& a) {
         //An operator for the additions between two matrices.
         Matrix<T> res(n, m);
         for (T i = 0; i < n; i++) {
             for (T j = 0; j < m; j++) {
-                res(i, j) = elements[i][j] + a(i, j);
+                res.set_element(i, j, elements[i][j] + a(i, j));
             }
         }
         return res;
@@ -52,7 +63,7 @@ public:
         Matrix<T> res(n, m);
         for (T i = 0; i < n; i++) {
             for (T j = 0; j < m; j++) {
-                res(i, j) = elements[i][j] - a(i, j);
+                res.set_element(i, j, elements[i][j] - a(i, j));
             }
         }
         return res;
@@ -63,7 +74,7 @@ public:
         Matrix<T> res(n, m);
         for (T i = 0; i < n; i++) {
             for (T j = 0; j < m; j++) {
-                res(i, j) = k * elements[i][j];
+                res.set_element(i, j, k * elements[i][j]);
             }
         }
         return res;
@@ -78,13 +89,13 @@ public:
                 for (int k = 0; k < m; k++) {
                     elm += elements[i][k] * a(k, j);
                 }
-                res(i, j) = elm;
+                res.set_element(i, j, elm);
             }
         }
         return res;
     };
-    
-     bool operator = (const Matrix& a) {
+
+    bool operator = (const Matrix& a) {
         for (int i = 0; i < n; i++){
             for (int j = 0; j < m; j++) {
                 if (elements[i][j] != a(i, j)) {
@@ -94,22 +105,21 @@ public:
         }
         return 1;
     };
-    
 
     Matrix crop_row(int r) {
-    //Returns a matrix where the 1st column and the i-th row were removed, input is expected to be a square matrix.
+    //Returns a matrix where the 1st column and the i-th row were removed.
         Matrix cropped(n-1, m-1);
         if (r > 0){
             for (int i = 0; i < r; i++) {
                 for (int j = 1; j < m; j++){
-                    cropped(i, j) = elements[i][j];
+                    cropped.set_element(i, j, elements[i][j]);
                 }
             }
         }
         if (r+1 < m) {
             for (int i = r+1; i < m; i++) {
                 for (int j = 1; j < m; j++){
-                    cropped(i, j) = elements[i][j];
+                    cropped.set_element(i, j, elements[i][j]);
                 }
             }
         }
@@ -133,15 +143,3 @@ public:
             return d;
         }
     };
-
-    Matrix adj() {
-    //Computes the adjacent matrix of a matrix, assuming it is a square matrix.
-    };
-    Matrix inverse(){
-    //Computes the inverse of a matrix, assuming it is a square matrix.
-    };
-
-private:
-    int n, m;
-    vector< vector<T> > elements ;
-};
