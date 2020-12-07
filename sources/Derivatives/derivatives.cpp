@@ -30,7 +30,11 @@ AbstractFunction::AbstractFunction(vector<Token> fun){
         *left = AbstractFunction(l);*right = AbstractFunction(r);
     }
     left = nullptr;right = nullptr;
-
+    string str="";
+    for (vector<Token>::iterator i =fun.begin();i<fun.end();i++){
+        str+=i->get_value();
+    }
+    str_label = str;
     }
 }
 
@@ -118,7 +122,6 @@ SinFunction::SinFunction(){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label= "sin";
 }
 template <typename Function1> Function1 SinFunction::solve(){
 
@@ -130,7 +133,6 @@ CosFunction::CosFunction(){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label= "cos";
 }
 
 template <typename Function1> Function1 CosFunction::solve(){
@@ -143,7 +145,6 @@ ExponentialFunction::ExponentialFunction(int base){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label="log(";
 }
 int ExponentialFunction::get_base(){
     return base;
@@ -160,7 +161,6 @@ ConstantFunction::ConstantFunction(int c){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label = "";
 }
 int ConstantFunction::get_c(){
     return c;
@@ -175,7 +175,6 @@ LogarithmicFunction::LogarithmicFunction(int base){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label = "log";
 }
 int LogarithmicFunction::get_base(){
     return base;
@@ -191,7 +190,6 @@ PolynomialFunction::PolynomialFunction(int exponent){
     left = nullptr;
     right = nullptr;
     operation = Operator();
-    str_label = "";
 }
 template <typename Function1> Function1 PolynomialFunction::solve(){
     int c = this->get_exponent();
